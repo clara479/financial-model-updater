@@ -58,7 +58,6 @@ if tickers_input:
 buffer = BytesIO()
 with pd.ExcelWriter(buffer, engine='openpyxl') as writer:
     df.to_excel(writer, index=False)
-    writer.save()
 buffer.seek(0)
 
 # Show download button

@@ -52,4 +52,20 @@ if tickers_input:
         }))
 
         # Download button
-        st.download_button("⬇ Download as Excel", data=df.to_excel(index=False), file_name="financial_summary.xlsx")
+        from io import BytesIO
+
+# Convert dataframe to Excel in memory
+buffer = BytesIO()
+with pd.ExcelWriter(buffer, engine='openpyxl') as writer:
+    df.to_excel(writer, index=False)
+    writer.save()
+buffer.seek(0)
+
+# Show download button
+st.download_button(
+    label="⬇ Download as Excel",
+    data=buffer,
+    file_name="financial_summary.xlsx",
+    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+)
+
